@@ -1,0 +1,96 @@
+apply plugin: 'com.android.application'
+Properties props = new Properties()
+props.load(new FileInputStream(file("signing.properties")))
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    signingConfigs {
+        debug {
+            keyAlias props['KEY_ALIAS']
+            keyPassword props['KEY_PASSWORD']
+            storeFile file(props['KEYSTORE_FILE'])
+            storePassword props['KEYSTORE_PASSWORD']
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.carl"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        multiDexEnabled true
+        versionCode 1
+        versionName "1.0"
+        signingConfig signingConfigs.debug
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        //debug环境
+        debug {
+            debuggable true
+            minifyEnabled false
+            //是否需要本地异常日志
+            buildConfigField "boolean", "IS_CRASH", "true"
+        }
+
+        release {
+            debuggable true
+            minifyEnabled false//是否开启混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //是否需要本地异常日志
+            buildConfigField "boolean", "IS_CRASH", "true"
+        }
+    }
+
+    /*为apk自动替换生成新名字，格式如： [項目名]_[test/release]_[version]_[date].apk*/
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "pda-${variant.name}-v${variant.versionName}.apk"
+        }
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+    }
+
+    packagingOptions {
+        pickFirst 'META-INF/*'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    implementation "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
+    implementation "com.android.support:cardview-v7:${rootProject.ext.supportLibVersion}"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.13"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    //时间工具类
+    implementation 'joda-time:joda-time:2.3'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.0.1'
+    implementation 'com.blankj:utilcode:1.20.4'
+    implementation 'com.android.support:multidex:1.0.3'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    implementation("org.ethereum:ethereumj-core:1.8.1-RELEASE") {
+        exclude group: 'org.iq80.leveldb', module: 'leveldb-api'
+    }
+    implementation 'com.github.japgolly.android:svg-android:2.0.6'
+    implementation 'com.google.zxing:core:3.3.3'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.rmtheis:tess-two:9.0.0'
+    implementation 'com.cv4j:cv4j:0.1.2'
+
+}

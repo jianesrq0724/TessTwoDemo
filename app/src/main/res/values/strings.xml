@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">AutoRegistDemo</string>
+    <string name="current_state">"%1$s"</string>
+    <string name="regist_success">Success:"%1$d"</string>
+    <string name="regist_fail">Fail:"%1$d"</string>
+</resources>

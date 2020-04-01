@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--sms_had, sms_no-->
+    <string name="sms_type">had_sms</string>
+
+    <!--    captcha_no, captcha_manual, captcha_auto -->
+    <string name="captcha_type">captcha_no</string>
+
+    <!--JiuYi, NuoKuai, TessTwo-->
+    <string name="captcha_platform">TessTwo</string>
+
+    <!--YiMa, YyYzm, ZanMa, YsDx-->
+    <string name="phone_platform">YiMa</string>
+
+
+    <!--1: 1-4位字母数字, 2: 4-6位字母数字, 3: 6-10位字母数字, 4: 汉字, 5:长度不确定  -->
+    <string name="captcha_length_type">5</string>
+
+    <!--是否转换大写 1是， 0否-->
+    <string name="convert_upper_case">0</string>
+
+    <!--请求短信是否需要cookie 1是 0否-->
+    <string name="req_sms_cookie">0</string>
+
+
+
+    <!--使用哪个IDCardUtils   1  2-->
+    <string name="use_id_card">1</string>
+
+</resources>
